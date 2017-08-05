@@ -14,6 +14,6 @@ A conky script using Material Design colors.
 
 ### Instructions
 
-Copy `.conkyrc` to your home folder and `find-removable-disks` to a new folder named `.conky-scripts`.
+Copy all files (except this README) to your home folder.
 
 Edit to your heart's content. Disk partitions and network interfaces will probably be different for you, so make note of that.
