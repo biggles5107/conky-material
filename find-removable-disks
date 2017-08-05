@@ -1,0 +1,17 @@
+#!/bin/bash
+
+DF_OUTPUT=`df /run/media/$USER/* | grep ^/dev`
+OUTPUT_TEXT=
+
+OLDIFS=$IFS
+IFS=$'\n'
+for LINE in $DF_OUTPUT
+do
+	MOUNTPOINT=`echo $LINE | awk '{print $6}'`
+	DEVICE_NAME=`echo $MOUNTPOINT | awk -F/ '{print $5}'`
+	BLOCK_DEVICE=`echo $LINE | awk '{print $1}'|awk -F/ '{print $3}'`
+	OUTPUT_TEXT="$OUTPUT_TEXT\${template1 $DEVICE_NAME $MOUNTPOINT}\n\${template2 $BLOCK_DEVICE}\n\n"
+done
+IFS=$OLDIFS
+
+echo -en "$OUTPUT_TEXT"
