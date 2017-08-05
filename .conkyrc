@@ -1,0 +1,170 @@
+background yes
+update_interval 2
+double_buffer yes
+#no_buffers yes
+#imlib_cache_size 10
+
+gap_x 30
+gap_y -250
+#minimum_size 268 1220
+#maximum_width 600
+alignment bottom_left
+own_window yes
+own_window_type desktop
+own_window_transparent yes
+own_window_argb_visual yes
+own_window_argb_value 255
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below
+border_inner_margin 0
+border_outer_margin 0
+
+# Graphics settings
+draw_shades no
+default_shade_color AAAAAA
+draw_outline no
+default_outline_color AAAAAA
+draw_borders no
+draw_graph_borders no
+#default_graph_size 26 80
+show_graph_scale no
+show_graph_range no
+default_bar_size 45 5
+
+# Text settings
+use_xft yes
+xftalpha 0
+font Noto Sans:size=9
+text_buffer_size 20000
+max_user_text 100000
+override_utf8_locale yes
+
+# Useful shortenings
+short_units yes
+pad_percents 2
+top_name_width 30
+
+## Color scheme
+# Greyscale
+default_color FFFFFF
+color0 F4F4F4
+color1 DEDEDE
+color2 B6B6B6
+color3 A1A1A1
+color4 828282
+color5 616161
+# Red
+color6 F44336
+# Green
+color7 4CAF50
+# Cyan
+color8 00BCD4
+# Blue
+color9 06B4F9
+
+## Template definitions
+# Disk usage and i/o
+template0 ${goto 300}${color9}\1${goto 400}${color1}${fs_used \1}${color2}/${fs_size \1}${goto 500}${color8}${fs_bar \1}
+template1 ${goto 300}${color9}\1${goto 400}${color1}${fs_used \2}${color2}/${fs_size \2}${goto 500}${color8}${fs_bar \2}
+template2 ${goto 300}${color7}READ ${color1}${diskio_read \1}${goto 400}${color6}WRITE ${color1}${diskio_write \1}
+
+TEXT
+${color0}${font Noto Sans:size=16:style=bold}${time %A}\
+${color}${goto 125}${voffset -25}${font Noto Sans:size=64}${time %d}
+${color2}${voffset -116}${font Noto Sans:size=12}${alignr 450}${time %B}$font
+${voffset -5}${color8}${hr 2}
+
+# CPU Usage
+${color}${font Noto Sans:size=9:style=bold}CPU$font \
+${color1}${cpu cpu0}%\
+${color8}${goto 60}${cpubar cpu1}\
+${goto 110}${cpubar cpu2}\
+${goto 160}${cpubar cpu3}\
+${goto 210}${cpubar cpu4}
+
+# Top processes (sorted by CPU usage)
+${font Source Code Pro:size=9:style=bold}\
+${voffset -15}${color9}NAME${goto 150}PID${goto 200}USAGE
+${font Source Code Pro:size=9}\
+${color1}${top name 1}${goto 150}${top pid 1}${goto 200}${top cpu 1}%
+${color2}${top name 2}${goto 150}${top pid 2}${goto 200}${top cpu 2}%
+${color4}${top name 3}${goto 150}${top pid 3}${goto 200}${top cpu 3}%
+${color4}${top name 4}${goto 150}${top pid 4}${goto 200}${top cpu 4}%
+${color5}${top name 5}${goto 150}${top pid 5}${goto 200}${top cpu 5}%
+
+# CPU frequencies and sensors
+${voffset -5}${font Source Code Pro:size=9:style=bold}\
+${color9}CORE${goto 43}FREQ${goto 150}SENSOR${goto 214}VALUE
+${font Source Code Pro:size=9}\
+${color1}cpu0${goto 43}${freq 1} MHz${goto 150}vcore${goto 214}${hwmon 1 in 0} V
+${color2}cpu1${goto 43}${freq 2} MHz${goto 150}temp${goto 214}${hwmon 1 temp 3}°C
+${color3}cpu2${goto 43}${freq 3} MHz${goto 150}cpu_fan${goto 214}${hwmon 1 fan 1} RPM
+${color4}cpu3${goto 43}${freq 4} MHz
+
+# GPU Information
+${color}${font Noto Sans:size=9:style=bold}GPU $font\
+${color1}${exec nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits}%\
+${goto 60}${color8}${execbar nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits}\
+${goto 115}${color9}VRAM \
+${color1}${exec nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits}M\
+${color2}/${exec nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits}M
+
+# GPU frequencies and sensors
+${voffset -10}${font Source Code Pro:size=9:style=bold}\
+${color9}${goto 43}CLOCK${goto 150}SENSOR${goto 214}VALUE
+${font Source Code Pro:size=9}\
+${color1}core\
+${goto 43}${exec nvidia-smi --query-gpu=clocks.current.graphics --format=csv,noheader}\
+${goto 150}temp\
+${goto 214}${color1}${exec nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits}°C
+${color2}mem\
+${goto 43}${exec nvidia-smi --query-gpu=clocks.current.memory --format=csv,noheader}\
+${goto 150}fan\
+${goto 214}${exec nvidia-smi --query-gpu=fan.speed --format=csv,noheader,nounits}%
+
+# Memory usage
+${voffset -312}${goto 300}${color}${font Noto Sans:size=9:style=bold}MEM$font \
+${color1}${mem}${color2}/${memmax} \
+${color8}${goto 410}${membar 5, 120}
+
+# Top processes (sorted by RAM usage)
+${font Source Code Pro:size=9:style=bold}\
+${voffset -15}${goto 300}${color9}NAME${goto 450}PID${goto 500}USAGE
+${font Source Code Pro:size=9}\
+${goto 300}${color1}${top_mem name 1}${goto 450}${top_mem pid 1}${goto 514}${top_mem mem_res 1}
+${goto 300}${color2}${top_mem name 2}${goto 450}${top_mem pid 2}${goto 514}${top_mem mem_res 2}
+${goto 300}${color3}${top_mem name 3}${goto 450}${top_mem pid 3}${goto 514}${top_mem mem_res 3}
+${goto 300}${color4}${top_mem name 4}${goto 450}${top_mem pid 4}${goto 514}${top_mem mem_res 4}
+${goto 300}${color5}${top_mem name 5}${goto 450}${top_mem pid 5}${goto 514}${top_mem mem_res 5}
+
+# Network
+${voffset -5}\
+${goto 300}${color}${font Noto Sans:size=9:style=bold}NET \
+${if_existing /proc/net/route enp2s0}\
+${color1}${font}[wired]
+${font Source Code Pro:size=9}\
+${goto 300}${color7}DOWN ${color1}${downspeed enp2s0}\
+${goto 400}${color6}UP ${color1}${upspeed enp2s0}
+${goto 300}${color9}IP ${color2}${addr enp2s0}\
+\
+${else}${if_existing /proc/net/route wlp6s0}\
+${color1}${font}${wireless_essid wlp6s0} \
+${color2}(${wireless_link_qual_perc wlp6s0}%)
+${font Source Code Pro:size=9}\
+${goto 300}${color7}DOWN ${color1}${downspeed wlp6s0} \
+${goto 400}${color6}UP ${color1}${upspeed wlp6s0}
+${goto 300}${color9}IP ${color2}${addr wlp6s0}\
+\
+${else}\
+${color6}${font}[unavailable]\
+${endif}${endif}
+
+# Disk usage
+${voffset -2}\
+${goto 300}${color}${font Noto Sans:size=9:style=bold}DISKS
+${font Source Code Pro:size=9}\
+${template0 /}
+${template0 /home}
+${template0 /media}
+
+# Removable disk usage and i/o (updated dynamically via a script)
+${execpi 10 ~/.conky-scripts/find-removable-disks}
