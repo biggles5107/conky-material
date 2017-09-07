@@ -1,6 +1,6 @@
 # conky-material
 
-A conky script using Material Design colors.
+A dynamic conky script using Material Design colors.
 
 ![conky-material](http://i.imgur.com/91VsSxm.png)
 
