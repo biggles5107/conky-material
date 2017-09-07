@@ -4,6 +4,12 @@ A conky script using Material Design colors.
 
 ![conky-material](http://i.imgur.com/91VsSxm.png)
 
+## Notable Features
+
+* Network stats change based on wired, wireless, or no connection
+* Pulls useful GPU stats from `nvidia-smi` (sorry, AMD/ATI users)
+* Dynamically adds disk usage and I/O for removable disks (not sure if this works under KDE)
+
 ## Installation
 
 ### Prerequisites
@@ -16,4 +22,14 @@ A conky script using Material Design colors.
 
 Copy all files (except this README) to your home folder.
 
-Edit to your heart's content. Disk partitions and network interfaces will probably be different for you, so make note of that.
+Edit to your heart's content. Disk partitions, network interfaces, and sensors will probably be different for you; make sure to edit accordingly. Adding disk partitions (e.g., if you have `/usr` on a separate partition) is as easy as adding a single line:
+
+```
+${template0 /usr}
+```
+
+That's it! To add disk I/O (e.g., if `/usr` is mounted on `/dev/sda3`), just add another line like so:
+
+```
+${template2 sda3}
+```
